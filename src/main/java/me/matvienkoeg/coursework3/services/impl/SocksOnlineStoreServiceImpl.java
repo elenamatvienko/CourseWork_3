@@ -23,37 +23,43 @@ public class SocksOnlineStoreServiceImpl implements SocksOnlineStoreService {
 
     @Override
     public void entrance(SocksBatch socksBatch) {
-        if (!validationService.validate(socksBatch))
+        if (!validationService.validate(socksBatch)) {
             throw new ValidationException();
+        }
         socksRepository.addSocksBatch(socksBatch);
     }
 
     @Override
     public int extradite(SocksBatch socksBatch) {
-        if (!validationService.validate(socksBatch))
+        if (!validationService.validate(socksBatch)) {
             throw new ValidationException();
+        }
         return socksRepository.delete(socksBatch);
     }
 
     @Override
     public int writeOff(SocksBatch socksBatch) {
-        if (!validationService.validate(socksBatch))
+        if (!validationService.validate(socksBatch)) {
             throw new ValidationException();
+        }
         return socksRepository.delete(socksBatch);
     }
 
     @Override
     public int getCount(Color color, Size size, int cottonMin, int cottonMax) {
-        if (!validationService.validate(color, size, cottonMin, cottonMax))
+   
+        if (!validationService.validate(color, size, cottonMin, cottonMax)) {
             throw new ValidationException();
+        }
         Map<Socks, Integer> socksMap = socksRepository.getAll();
+        int count = 0;
         for (Map.Entry<Socks, Integer> socksType : socksMap.entrySet()) {
             Socks socks = socksType.getKey();
             if (socks.getColor().equals(color)
                     && socks.getSize().equals(size)
                     && socks.getCottonPart() >= cottonMin
                     && socks.getCottonPart() <= cottonMax) {
-                return socksType.getValue();
+                 count += socksType.getValue();
             }
         }
 

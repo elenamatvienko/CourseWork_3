@@ -11,7 +11,7 @@ import java.util.Map;
 @Repository
 public class SocksRepositoryImpl implements SocksRepository {
 
-    public HashMap<Socks, Integer> socksMap = new HashMap<>();
+    public Map<Socks, Integer> socksMap = new HashMap<>();
 
 
     @Override
@@ -33,7 +33,7 @@ public class SocksRepositoryImpl implements SocksRepository {
         if (socksMap.containsKey(socks)) {
 
             if (quantity > socksBatch.getQuantity()) {
-                socksMap.replace(socks, socksMap.get(socks) - socksBatch.getQuantity());
+                socksMap.replace(socks, quantity - socksBatch.getQuantity());
                 return socksBatch.getQuantity();
             } else {
                 socksMap.remove(socks);
